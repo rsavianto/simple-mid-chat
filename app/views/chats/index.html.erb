@@ -1,12 +1,12 @@
 <script src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-<h4>You are in channel <%= @channel.name %></h4>
+<h4>You are in room <%= @channel.name %></h4>
 
 <table class="chat-table">
   <% @chats.each do |chat| %>	
   	<tr>
-      <td><%= chat.username %></td>
+      <td><%= @username == chat.username ? "You" : chat.username %></td>
   	  <td>:</td>
   	  <td><%= chat.message %></td>
     </tr>		
@@ -22,7 +22,8 @@
   var channel = pusher.subscribe('<%= @channel.name %>');
 
   channel.bind('chatting', function(data) {
-  	var html='<tr><td>'+data.username+'</td><td>:</td><td>'+data.message+'</td></tr>';
+  	var username = '<%= @username %>' == data.username ? "You" : data.username;
+  	var html='<tr><td>'+username+'</td><td>:</td><td>'+data.message+'</td></tr>';
   	$('.chat-table').append(html);
   });
   
