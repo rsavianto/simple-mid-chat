@@ -5,7 +5,7 @@ class CreateChannels < ActiveRecord::Migration
       t.timestamp
     end
     for i in 1..5
-      Chat.create(:name => "Channel#{i}")
+      Channel.create(:name => "Channel#{i}")
     end
   end
 
