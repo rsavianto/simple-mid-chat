@@ -1,0 +1,14 @@
+<h4>Welcome to MidChat</h4>
+<%= form_tag('/sessions', :method => :post) do -%>
+  <table>
+  	<tr>
+      <td>Username</td><td>:</td><td><%= text_field_tag 'username'%></td>
+    </tr>
+    <tr>
+      <td>Channel</td><td>:</td><td><%= select_tag "channel", options_from_collection_for_select(@channels, "id", "name") %></td>
+    </tr>
+    <tr>
+    	<td colspan="3"><%= submit_tag 'Enter', :class => "submit-text" %></td>
+    </tr>
+  </table>
+<% end -%>
