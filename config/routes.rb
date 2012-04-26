@@ -2,6 +2,7 @@ AppMt::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
   root :to => 'home#index'
+  match 'logout' => 'sessions#destroy'
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
@@ -25,7 +26,12 @@ AppMt::Application.routes.draw do
   #     end
   #   end
   
-  resources :chats, :only => [:index,:create]
+  resources :chats, :only => [:index,:create] do
+    collection do
+      post 'change_room'
+    end  
+  end
+  
   resources :sessions, :only => :create
 
   # Sample resource route with sub-resources:

@@ -9,6 +9,7 @@ class ChatsController < ApplicationController
   
   def index
     @chats = @channel.chats.last(Chat::MAX_LOGGING)
+    @channels = Channel.all
   end
   
   def create
@@ -17,6 +18,12 @@ class ChatsController < ApplicationController
     #Logging
     Chat.create(:channel_id => @channel.id, :username => @username, :message => message)
     head(:ok)
+  end
+  
+  def change_room
+    session[:channel] = params[:channel]
+    
+    redirect_to chats_url
   end
   
 private
