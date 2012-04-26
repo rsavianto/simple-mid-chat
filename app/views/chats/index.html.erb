@@ -13,21 +13,23 @@
   <% end %>
 </table>	
 
+<br/>
 <%= form_tag('/chats', :method => :post) do -%>
-  <div><%= text_field_tag 'message'%><%= submit_tag 'Ok', :class => "submit-text" %></div>
+  <div><%= text_field_tag 'message'%><%= submit_tag 'Ok', :class => "submit-text", :style => "display:none;"%></div>
 <% end -%>
 
-<%= form_tag('/chats/change_room', :method => :post) do -%>
-  <div>
-  	Change Room
-  	<%= select_tag "channel", options_from_collection_for_select(@channels, "id", "name") %> 
-  	<%= submit_tag 'Ok' %>
-  </div>
-<% end -%>
+<br/>
+<div style="float:left;"><%= link_to 'Logout', logout_url %>&nbsp;</div>
+<div style="float:left;"><%= link_to 'Change Room', '#', :class => 'change-room'%>
+  <br/>
+  <%= form_tag('/chats/change_room', :method => :post, :class => "change-room-form", :style => "display:none;padding-top:4px;") do -%>
+    <div>
+  	  <%= select_tag "channel", options_from_collection_for_select(@channels, "id", "name") %> 
+  	  <%= submit_tag 'Ok' %>
+    </div>
+  <% end -%>
+</div>
 
-<%= form_tag('/logout', :method => :post) do -%>
-  <div><%= submit_tag 'Logout' %></div>
-<% end -%>
 <script>
   var pusher = new Pusher('768124b90277f5c9ca27'); // Replace with your app key
   var channel = pusher.subscribe('<%= @channel.name %>');
@@ -51,4 +53,8 @@
   	return false;
   });
 
+
+  $('.change-room').click(function() {
+  	$('.change-room-form').toggle('slow');
+  });
 </script>
